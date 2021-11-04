@@ -16,11 +16,11 @@
                 />
             </svg>
         </NuxtLink>
-        <h1 class="topic-name">{{ topic.topic_name }}</h1>
-        <h2 class="activist-name">{{ topic.activist_name }}</h2>
-        <p class="location">{{ topic.location }}</p>
-        <div class="topic-description" v-html="topic.activist_text"></div>
-        <a :href="assetsUrl + topic.material" target="_blank">download material</a>
+        <h1 class="topic-name">{{ topic.topic_    name }}</h1>
+        <h2 class="activist-name">{{ topic.activi    st_name }}</h2>
+        <p class="location">{{     topic.location }}</p>
+        <div class="topic-description" v-html="topic.ac    tivist_text"></div>
+        <a :href="assetsUrl     + topic.material" target="_blank">download material</a>
         <audio :src="assetsUrl + topic.podcast" controls></audio>
         <video :src="assetsUrl + topic.video" controls></video>
         <li v-for="tag in topic.taging" :key="topic.name + '' + tag">{{ tag }}</li>
@@ -31,7 +31,7 @@ export default {
     transition: "topicPage",
     async asyncData({ $axios, params }) {
         const topicId = await params.topicsPage
-        const topics = await $axios.$get('http://sandy.uber.space/items/topic')
+        const topics = await $axios.$get('https://sandy.uber.space/items/topic')
         const topic = topics.data.filter(topic => { return topicId === topic.id })[0]
         const assetsUrl = "https://sandy.uber.space/assets/"
         return {

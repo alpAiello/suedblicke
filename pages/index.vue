@@ -39,7 +39,7 @@
 <script>
 export default {
     async asyncData({ $axios }) {
-        const topics = await $axios.$get('http://sandy.uber.space/items/topic')
+        const topics = await $axios.$get('https://sandy.uber.space/items/topic')
         return { topics }
     }, methods: {
         scaleToTopicpage(e) {

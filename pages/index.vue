@@ -5,7 +5,8 @@
             :id="topic.name"
             :key="topic.id"
             class="listItem"
-            v-on:click="e => scaleToTopicpage(e)"
+            :class="{ 'preview': isPreviewOpen }"
+            @mouseover="e => openPreview(e)"
         >
             <NuxtLink :to="'/topics/' + topic.id">
                 <svg
@@ -28,6 +29,10 @@
                         d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                 </svg>
+                <img
+                    :src="'https://sandy.uber.space/assets/' + topic.activist_portrait"
+                    alt="activist portrait"
+                />
                 <h1>{{ topic.topic_name }}</h1>
                 <h2>{{ topic.activist_name }}</h2>
                 <h2>{{ topic.location }}</h2>
@@ -41,10 +46,15 @@ export default {
     async asyncData({ $axios }) {
         const topics = await $axios.$get('https://sandy.uber.space/items/topic')
         return { topics }
+    },
+    data() {
+        return { isPreviewOpen: false }
     }, methods: {
-        scaleToTopicpage(e) {
+        openPreview(e) {
             console.log(e.currentTarget)
-        }
+            if (this.isPreviewOpen === true) { return }
+            this.isPreviewOpen = !this.isPreviewOpen
+        },
     }
 }
 </script>
@@ -53,7 +63,6 @@ export default {
     color: aliceblue;
 }
 #topicList {
-    display: grid;
     width: 100vw;
     height: 100vh;
     grid-template-columns: 1fr 1fr 1fr;
@@ -66,9 +75,9 @@ export default {
 }
 .listItem {
     display: flex;
-    width: 30px;
-    height: 30px;
-    border: solid rgb(131, 78, 255) 30px;
+    width: 16px;
+    height: 16px;
+    border: solid rgb(131, 78, 255) 8px;
     border-radius: 300px;
     background-color: rgb(131, 78, 255);
     color: rgb(131, 78, 255);
@@ -77,10 +86,10 @@ export default {
     justify-content: center;
     align-items: center;
 }
-.listItem:hover {
+.listItem.preview {
     transition: all ease 300ms;
-    width: 150px;
-    height: 150px;
+    width: 300px;
+    height: 300px;
     border: solid rgb(131, 78, 255) 2px;
     border-radius: 10px;
     background-color: rgb(131, 78, 255);
